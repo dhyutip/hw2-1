@@ -1,38 +1,38 @@
 <?php 
     //set default value of variables for initial page load
-    if (!isset($investment)) { $investment = ''; } 
-    if (!isset($interest_rate)) { $interest_rate = ''; } 
-    if (!isset($years)) { $years = ''; } 
+    if (!isset($pdesc)) { $pdesc = ''; } 
+    if (!isset($list_price)) { $list_price = ''; } 
+    if (!isset($discount_percent)) { $discount_percent = ''; } 
 ?> 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Future Value Calculator</title>
+    <title>Product Discount Calculator</title>
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 
 <body>
     <main>
-    <h1>Future Value Calculator</h1>
+    <h1>Product Discount Calculator</h1>
     <?php if (!empty($error_message)) { ?>
         <p class="error"><?php echo htmlspecialchars($error_message); ?></p>
     <?php } ?>
     <form action="display_results.php" method="post">
 
         <div id="data">
-            <label>Investment Amount:</label>
-            <input type="text" name="investment"
-                   value="<?php echo htmlspecialchars($investment); ?>">
+            <label>Product Description:</label>
+            <input type="text" name="pdesc"
+                   value="<?php echo htmlspecialchars($pdesc); ?>">
             <br>
 
-            <label>Yearly Interest Rate:</label>
-            <input type="text" name="interest_rate"
-                   value="<?php echo htmlspecialchars($interest_rate); ?>">
+            <label>List Price:</label>
+            <input type="text" name="list_price"
+                   value="<?php echo htmlspecialchars($list_price); ?>">
             <br>
 
-            <label>Number of Years:</label>
-            <input type="text" name="years"
-                   value="<?php echo htmlspecialchars($years); ?>">
+            <label>Discount Percent:</label>
+            <input type="text" name="discount_percent"
+                   value="<?php echo htmlspecialchars($discount_percent); ?>">
             <br>
         </div>
 

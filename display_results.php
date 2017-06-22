@@ -1,73 +1,55 @@
 <?php
     // get the data from the form
-    $investment = filter_input(INPUT_POST, 'investment',
+    
+    $pdesc = filter_input(INPUT_POST, 'pdesc');
+    $list_price = filter_input(INPUT_POST, 'list_price',
         FILTER_VALIDATE_FLOAT);
-    $interest_rate = filter_input(INPUT_POST, 'interest_rate',
+    $discount_percent= filter_input(INPUT_POST, 'discount_percent',
         FILTER_VALIDATE_FLOAT);
-    $years = filter_input(INPUT_POST, 'years',
-        FILTER_VALIDATE_INT);
 
-    // validate investment
-    if ($investment === FALSE ) {
-        $error_message = 'Investment must be a valid number.'; 
-    } else if ( $investment <= 0 ) {
-        $error_message = 'Investment must be greater than zero.'; 
-    // validate interest rate
-    } else if ( $interest_rate === FALSE )  {
-        $error_message = 'Interest rate must be a valid number.'; 
-    } else if ( $interest_rate <= 0 ) {
-        $error_message = 'Interest rate must be greater than zero.'; 
-    // validate years
-    } else if ( $years === FALSE ) {
-        $error_message = 'Years must be a valid whole number.';
-    } else if ( $years <= 0 ) {
-        $error_message = 'Years must be greater than zero.';
-    } else if ( $years > 30 ) {
-        $error_message = 'Years must be less than 31.';
-    // set error message to empty string if no invalid entries
-    } else {
-        $error_message = ''; 
-    }
 
-    // if an error message exists, go to the index page
-    if ($error_message != '') {
-        include('index.php');
-        exit(); 
-    }
-
-    // calculate the future value
-    $future_value = $investment;
-    for ($i = 1; $i <= $years; $i++) {
-        $future_value = 
-            $future_value + ($future_value * $interest_rate * .01); 
-    }
+    // calculate the discount
+    $discount = $list_price*$discount_percent*.01;
+    $discount_price=$list_price-$discount;
 
     // apply currency and percent formatting
-    $investment_f = '$'.number_format($investment, 2);
-    $yearly_rate_f = $interest_rate.'%';
-    $future_value_f = '$'.number_format($future_value, 2);
-?>
+    $list_price_formatted = '$'.number_format($list_price, 2);
+    $discount_percent_formatted = $discount_percent.'%';
+    $discount_formatted = '$'.number_format($discount,2);
+    $discount_price_formatted = '$'.number_format($discount_price, 2);
+    ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Future Value Calculator</title>
+    <title>Product Discount Calculator</title>
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
     <main>
-        <h1>Future Value Calculator</h1>
+      <form>
+        <h1>Product Discount Calculator</h1>
 
-        <label>Investment Amount:</label>
-        <span><?php echo $investment_f; ?></span><br>
+	<div id="data">
+        <label>Product Description:</label>
+        <span><?php echo $pdesc; ?><br></span><br>
 
-        <label>Yearly Interest Rate:</label>
-        <span><?php echo $yearly_rate_f; ?></span><br>
+        <label>List Price:</label>
+        <span><?php echo $list_price_formatted; ?></span><br>
 
-        <label>Number of Years:</label>
-        <span><?php echo $years; ?></span><br>
+        <label>Discount Percentage:</label>
+        <span><?php echo $discount_percent_formatted; ?></span><br>
 
-        <label>Future Value:</label>
-        <span><?php echo $future_value_f; ?></span><br>
+	<label>Discount Amount:</label>
+        <span><?php echo $discount_formatted; ?></span><br>
+
+	<label>Discount Price:</label>
+        <span><?php echo $discount_price_formatted; ?></span><br>
+         <div id="buttons">
+           <input type="submit" value="Calculate Discount"><br>
+         </div>
+
+      </form>
     </main>
 </body>
 </html>
